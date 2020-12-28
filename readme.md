@@ -1,4 +1,4 @@
-![console error](https://github.com/jacobra19/fantasy-tracker-firebase/blob/main/puppeteer-logo.png?raw=true)
+![console error](https://github.com/jacobra19/fantasy-tracker-firebase/blob/main/error.png?raw=true)
 
 1) convert sample.env to .env
 
