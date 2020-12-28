@@ -7,3 +7,5 @@
 ```
     const cronFormat = '30 * * * *'
 ``` 
+
+3) check link: https://github.com/firebase/firebase-functions/issues/611
