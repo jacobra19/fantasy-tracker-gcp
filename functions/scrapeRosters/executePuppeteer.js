@@ -3,23 +3,21 @@ const puppeteer = require('puppeteer');
 const leagueId = process.env.LEAGUE_ID || ''
 const rostersUrl = `https://fantasy.espn.com/basketball/league/rosters?leagueId=${leagueId}&seasonId=2021`;
 
-const executePuppeteer = async () => {
+const executePuppeteer = async (rookies) => {
 
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({
+        headless: true,
+        args: ['--no-sandbox','--disable-setuid-sandbox']
+    });
+
+    
     const page = await browser.newPage();
 
     await page.goto(rostersUrl, {
         waitUntil: 'networkidle0',
     });
 
-    await page.click('#onetrust-accept-btn-handler');
-
-    await page.waitForNavigation({
-        waitUntil: 'networkidle0',
-    });
-
-    const rosters = await page.evaluate(() => {
-        const rookies = require('./rookies').rookies2020Draft
+    const rosters = await page.evaluate((rookies) => {
 
         let teamElement = Array.prototype.slice.call(document.getElementsByClassName('ResponsiveTable'))
 
@@ -43,7 +41,7 @@ const executePuppeteer = async () => {
             }
         })
 
-    });
+    },rookies);
 
 
     console.log(rosters)
