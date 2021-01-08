@@ -61,7 +61,9 @@ const rookies2020Draft = {
     'Sam Merrill':true,
 }
 
-const rookies2020Undrafted = {}
+const rookies2020Undrafted = {
+    'Facundo Campazzo':true,
+}
 
 
-exports.rookies2020Draft = {...rookies2020Draft,...rookies2020Undrafted};
+exports.rookies2020 = {...rookies2020Draft,...rookies2020Undrafted};
