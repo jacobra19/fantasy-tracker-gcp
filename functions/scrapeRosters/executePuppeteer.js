@@ -2,6 +2,7 @@ require('dotenv').config()
 const puppeteer = require('puppeteer');
 const leagueId = process.env.LEAGUE_ID || ''
 const rostersUrl = `https://fantasy.espn.com/basketball/league/rosters?leagueId=${leagueId}&seasonId=2021`;
+const matchupUrl = `https://fantasy.espn.com/basketball/league/scoreboard?leagueId=${leagueId}`
 
 const executePuppeteer = async (rookies) => {
 
@@ -11,13 +12,13 @@ const executePuppeteer = async (rookies) => {
     });
 
     
-    const page = await browser.newPage();
+    const rosterPage = await browser.newPage();
 
-    await page.goto(rostersUrl, {
+    await rosterPage.goto(rostersUrl, {
         waitUntil: 'networkidle0',
     });
 
-    const rosters = await page.evaluate((rookies) => {
+    const rosters = await rosterPage.evaluate((rookies) => {
 
         let teamElement = Array.prototype.slice.call(document.getElementsByClassName('ResponsiveTable'))
 
@@ -43,11 +44,27 @@ const executePuppeteer = async (rookies) => {
 
     },rookies);
 
+    rosterPage.close()
+
+
+
+    const matchupPage = await browser.newPage();
+    await matchupPage.goto(matchupUrl, {
+        waitUntil: 'networkidle0',
+    });
+
+    const matchup = await matchupPage.evaluate(() => {
+        const currentMatchupEl = [...document.getElementsByClassName('dropdown__select')][0]
+        const currentMatchupValue = currentMatchupEl.value;
+        const options = [...currentMatchupEl.children]
+        const currentOptionEl = options.filter(item=>item.value===currentMatchupValue)[0]
+        return currentOptionEl.innerText
+    });
 
     console.log(rosters)
     await browser.close()
 
-    if (rosters) return rosters
+    if (rosters) return {rosters,matchup}
 
 }
 

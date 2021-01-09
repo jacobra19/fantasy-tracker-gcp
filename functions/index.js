@@ -18,14 +18,15 @@ const runtimeOpts = {
 exports.updateDailyRosters = functions.runWith(runtimeOpts).pubsub.schedule(cronFormat).timeZone('Asia/Jerusalem').onRun(async (context) => {
     functions.logger.info("before", { structuredData: true });
 
-    let dailyRoster = await scrape(rookies2020)
+    let {rosters,matchup} = await scrape(rookies2020)
 
     let objectToSave = {
-        isRookieStatusValid: dailyRoster.every(item => {
+        isRookieStatusValid: rosters.every(item => {
             return item.rooks.length > 0
         }),
-        rosters: dailyRoster,
-        time: now.toDate()
+        rosters,
+        time: now.toDate(),
+        matchup
     }
 
     let weriteResult = await admin.firestore().collection('daily-rosters').add(objectToSave)
