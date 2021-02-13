@@ -63,6 +63,7 @@ const rookies2020Draft = {
 
 const rookies2020Undrafted = {
     'Facundo Campazzo':true,
+    "Jae'Sean Tate": true
 }
 
 
