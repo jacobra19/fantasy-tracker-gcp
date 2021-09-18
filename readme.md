@@ -1,11 +1,6 @@
-![console error](https://github.com/jacobra19/fantasy-tracker-firebase/blob/main/error.png?raw=true)
+# fantasy-rookie-tracker
 
-1) convert sample.env to .env
+![firebase](https://github.com/jacobra19/fantasy-rookie-tracker/blob/main/firebase-logo.png?raw=true)
+![puppeteer](https://github.com/jacobra19/fantasy-rookie-tracker/blob/main/puppeteer-logo.png?raw=true)
 
-
-2) in functions/index.js, change cronFormat variable as you wish
-```
-    const cronFormat = '30 * * * *'
-``` 
-
-3) check link: https://github.com/firebase/firebase-functions/issues/611
+node.js script to monitor rookie rule in espn fantasy league using puppeteer on top of firebase functions
